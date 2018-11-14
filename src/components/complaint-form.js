@@ -1,10 +1,11 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-const URL = 'https://us-central1-delivery-form-api.cloudfunctions.net/api/report';
 import Input from './input';
-import { } from '../validators';
+import {required, notEmpty, exactLength, onlyNumbers } from '../validators';
 
-export class ComplaintForm extends React.Component {
+const URL = 'https://us-central1-delivery-form-api.cloudfunctions.net/api/report';
+
+class ComplaintForm extends React.Component {
 
     render() {
         return (
@@ -16,7 +17,7 @@ export class ComplaintForm extends React.Component {
                     name="tracking-number"
                     id="tracking-number"
                     label="Tracking Number"
-                    validate={}
+                    validate={[required, notEmpty, onlyNumbers, exactLength]}
                 >
                 </Field>
                 <Field
@@ -25,7 +26,7 @@ export class ComplaintForm extends React.Component {
                     name="issue"
                     id="issue"
                     label="What is your issue?"
-                    validate={}
+                    validate={[required]}
                 >
                     <option value="not-delivered">My delivery hasn't arrived</option>
                     <option value="wrong-item">The wrong item was delivered</option>
@@ -50,4 +51,4 @@ export class ComplaintForm extends React.Component {
 
 export default reduxForm({
     form : 'complaint'
-})(ComplaintForm)
+})(ComplaintForm);
