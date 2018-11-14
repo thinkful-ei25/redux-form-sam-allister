@@ -7,9 +7,14 @@ const URL = 'https://us-central1-delivery-form-api.cloudfunctions.net/api/report
 
 class ComplaintForm extends React.Component {
 
+    onSubmit(values){
+        console.log(values);
+    }
+
     render() {
         return (
-            <form>
+            <form onSubmit={this.props.handleSubmit(values=> 
+                this.onSubmit(values))}>
                 <Field
                     component={Input}
                     element="input"
@@ -28,6 +33,7 @@ class ComplaintForm extends React.Component {
                     label="What is your issue?"
                     validate={[required]}
                 >
+                    <option></option>
                     <option value="not-delivered">My delivery hasn't arrived</option>
                     <option value="wrong-item">The wrong item was delivered</option>
                     <option value="missing-part">Part of my order was missing</option>
@@ -42,7 +48,14 @@ class ComplaintForm extends React.Component {
                     label="Give more details (optional)"
                 >
                 </Field>
-                <button type="submit">Submit</button>
+                <button 
+                    type="submit"
+                    disabled={
+                        this.props.pristine ||
+                        this.props.submitting
+                    }>
+                    Submit
+                </button>
             </form>
         )
     }
